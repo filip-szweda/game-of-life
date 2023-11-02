@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,7 +23,8 @@ namespace game_of_life
     /// </summary>
     public partial class GameControl : UserControl
     {
-        private static readonly int DEFAULT_CELL_SIZE = 20;
+        private static readonly int DEFAULT_CELL_WIDTH = 20;
+        private static readonly int DEFAULT_CELL_HEIGHT = DEFAULT_CELL_WIDTH;
         private readonly TimeSpan tickInterval = TimeSpan.FromMilliseconds(100);
 
         private DispatcherTimer tickTimer;
@@ -35,32 +37,32 @@ namespace game_of_life
             // tickTimer.Tick += <method>;
         }
 
-        private void GenerateGameGrid(int size)
+        private void GenerateGameGrid(int width, int height)
         {
             GameGrid.Children.Clear();
             GameGrid.RowDefinitions.Clear();
             GameGrid.ColumnDefinitions.Clear();
-            GameGrid.Width = size * DEFAULT_CELL_SIZE;
-            GameGrid.Height = size * DEFAULT_CELL_SIZE;
+            GameGrid.Width = width * DEFAULT_CELL_WIDTH;
+            GameGrid.Height = height * DEFAULT_CELL_HEIGHT;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < width; i++)
             {
-                GameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(DEFAULT_CELL_SIZE) });
+                GameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(DEFAULT_CELL_WIDTH) });
             }
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < height; i++)
             {
-                GameGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(DEFAULT_CELL_SIZE) });
+                GameGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(DEFAULT_CELL_HEIGHT) });
             }
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < width; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < height; j++)
                 {
                     var cell = new Rectangle
                     {
-                        Width = DEFAULT_CELL_SIZE,
-                        Height = DEFAULT_CELL_SIZE,
+                        Width = DEFAULT_CELL_WIDTH,
+                        Height = DEFAULT_CELL_HEIGHT,
                         Fill = Brushes.White,
                         Stroke = Brushes.Black,
                         StrokeThickness = 0.5
@@ -75,13 +77,20 @@ namespace game_of_life
 
         private void GenerateGridButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(GridSizeTextBox.Text, out int size) && int.TryParse(GridSizeTextBox.Text, out int height))
+            if (int.TryParse(GridWidthTextBox.Text, out int width))
             {
-                GenerateGameGrid(size);
+                if (int.TryParse(GridHeightTextBox.Text, out int height))
+                {
+                    GenerateGameGrid(width, height);
+                }
+                else
+                {
+                    MessageBox.Show($"[ERROR] Provided grid height: {height} is invalid. Please, provide valid grid size.");
+                }
             }
             else
             {
-                MessageBox.Show($"[ERROR] Provided grid size: {size} is invalid. Please, provide valid grid size.");
+                MessageBox.Show($"[ERROR] Provided grid width: {width} is invalid. Please, provide valid grid size.");
             }
         }
     }

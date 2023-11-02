@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
-    
     <Grid>
         <StackPanel HorizontalAlignment="Left">
-            <TextBox Name="GridSizeTextBox" Width="50" Text="50" />
-            <Button Content="Generate Grid" Click="GenerateGridButton_Click" Margin="5 0 0 0" />
+            <TextBox Name="GridWidthTextBox" Width="150" Text="50" />
+            <TextBox Name="GridHeightTextBox" Width="150" Text="50" />
+            <Button Content="Generate Grid" Click="GenerateGridButton_Click" />
         </StackPanel>
-        <Grid Name="GameGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Grid Name="GameGrid" Margin="150,0,0,0"/>
     </Grid>
 </UserControl>
