@@ -20,9 +20,12 @@ namespace game_of_life
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GameControl gameControl;
         public MainWindow()
         {
             InitializeComponent();
+            gameControl = new GameControl();
+            MainContentControl.Content = gameControl;
         }
     }
 }
