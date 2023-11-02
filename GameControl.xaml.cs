@@ -23,22 +23,51 @@ namespace game_of_life
     /// </summary>
     public partial class GameControl : UserControl
     {
-        private static readonly int DEFAULT_CELL_WIDTH = 20;
-        private static readonly int DEFAULT_CELL_HEIGHT = DEFAULT_CELL_WIDTH;
-        private readonly TimeSpan tickInterval = TimeSpan.FromMilliseconds(100);
+        static readonly int DEFAULT_CELL_WIDTH = 20;
+        static readonly int DEFAULT_CELL_HEIGHT = DEFAULT_CELL_WIDTH;
+        readonly TimeSpan tickInterval = TimeSpan.FromMilliseconds(100);
 
-        private DispatcherTimer tickTimer;
+        DispatcherTimer tickTimer;
+        GameOfLife? gameOfLife;
         public GameControl()
         {
             InitializeComponent();
             // set how often the Tick event will be raised
             tickTimer = new DispatcherTimer { Interval = tickInterval };
             // subscribe <method> method to the Tick event
-            // tickTimer.Tick += <method>;
+            tickTimer.Tick += GameTick;
         }
 
-        private void GenerateGameGrid(int width, int height)
+        void Cell_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            var clickedRectangle = sender as Rectangle;
+
+            if (clickedRectangle == null)
+            {
+                MessageBox.Show("[ERROR] Clicked rectangle is null.");
+                return;
+            }
+
+            var clickedCell = clickedRectangle.DataContext as Cell;
+
+            if (clickedCell == null)
+            {
+                MessageBox.Show("[ERROR] Clicked cell is null.");
+                return;
+            }
+
+            clickedCell.IsAlive = !clickedCell.IsAlive;
+            System.Diagnostics.Debug.WriteLine($"[INFO] Clicked cell, X: {clickedCell.X}, Y: {clickedCell.Y}");
+        }
+
+        void GenerateGameGrid(int width, int height)
+        {
+            if (gameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
             GameGrid.Children.Clear();
             GameGrid.RowDefinitions.Clear();
             GameGrid.ColumnDefinitions.Clear();
@@ -65,8 +94,19 @@ namespace game_of_life
                         Height = DEFAULT_CELL_HEIGHT,
                         Fill = Brushes.White,
                         Stroke = Brushes.Black,
-                        StrokeThickness = 0.5
+                        StrokeThickness = 0.5,
+                        DataContext = gameOfLife.cellsGrid[i, j]
                     };
+
+                    var binding = new Binding("IsAlive")
+                    {
+                        Converter = new BoolToBrushConverter(),
+                        ConverterParameter = this,
+                        Mode = BindingMode.OneWay
+                    };
+                    cell.SetBinding(Rectangle.FillProperty, binding);
+
+                    cell.MouseDown += Cell_MouseDown;
 
                     Grid.SetColumn(cell, i);
                     Grid.SetRow(cell, j);
@@ -75,13 +115,15 @@ namespace game_of_life
             }
         }
 
-        private void GenerateGridButton_Click(object sender, RoutedEventArgs e)
+        void GenerateGridButton_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(GridWidthTextBox.Text, out int width))
             {
                 if (int.TryParse(GridHeightTextBox.Text, out int height))
                 {
+                    gameOfLife = new GameOfLife(width, height);
                     GenerateGameGrid(width, height);
+                    this.DataContext = gameOfLife;
                 }
                 else
                 {
@@ -92,6 +134,17 @@ namespace game_of_life
             {
                 MessageBox.Show($"[ERROR] Provided grid width: {width} is invalid. Please, provide valid grid size.");
             }
+        }
+
+        void GameTick(object sender, EventArgs e)
+        {
+            if (gameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            gameOfLife.Update(); ;
         }
     }
 }

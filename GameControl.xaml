@@ -9,8 +9,8 @@
              Background="White">
     <Grid>
         <StackPanel HorizontalAlignment="Left">
-            <TextBox Name="GridWidthTextBox" Width="150" Text="50" />
-            <TextBox Name="GridHeightTextBox" Width="150" Text="50" />
+            <TextBox Name="GridWidthTextBox" Width="150" Text="40" />
+            <TextBox Name="GridHeightTextBox" Width="150" Text="40" />
             <Button Content="Generate Grid" Click="GenerateGridButton_Click" />
         </StackPanel>
         <Grid Name="GameGrid" Margin="150,0,0,0"/>
