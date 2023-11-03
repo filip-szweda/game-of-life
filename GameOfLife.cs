@@ -9,7 +9,7 @@ using System.Windows.Media.Media3D;
 
 namespace game_of_life
 {
-    public class GameOfLife
+    public class GameOfLife : INotifyPropertyChanged
     {
         public int Width;
         public int Height;
