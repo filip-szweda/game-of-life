@@ -136,7 +136,7 @@ namespace game_of_life
             }
         }
 
-        void StartButton_Click(object sender, RoutedEventArgs e)
+        void StartAnimationButton_Click(object sender, RoutedEventArgs e)
         {
             if (gameOfLife == null)
             {
@@ -148,7 +148,7 @@ namespace game_of_life
             tickTimer.Start();
         }
 
-        void StopButton_Click(object sender, RoutedEventArgs e)
+        void StopAnimationButton_Click(object sender, RoutedEventArgs e)
         {
             if (gameOfLife == null)
             {
@@ -160,6 +160,17 @@ namespace game_of_life
             tickTimer.Stop();
         }
 
+        void OneFrameForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (gameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            gameOfLife.Update();
+        }
+
         void GameTick(object sender, EventArgs e)
         {
             if (gameOfLife == null)
@@ -168,7 +179,6 @@ namespace game_of_life
                 return;
             }
 
-            System.Diagnostics.Debug.WriteLine($"[INFO] Started game of life update");
             gameOfLife.Update();
         }
     }

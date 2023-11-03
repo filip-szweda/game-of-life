@@ -12,8 +12,9 @@
             <TextBox Name="GridWidthTextBox" Width="150" Text="40" />
             <TextBox Name="GridHeightTextBox" Width="150" Text="40" />
             <Button Content="Generate Grid" Click="GenerateGridButton_Click" />
-            <Button Content="Start" Click="StartButton_Click" />
-            <Button Content="Stop" Click="StopButton_Click" />
+            <Button Content="Start Animation" Click="StartAnimationButton_Click" />
+            <Button Content="Stop Animation" Click="StopAnimationButton_Click" />
+            <Button Content="One Frame Forward" Click="OneFrameForwardButton_Click" />
         </StackPanel>
         <Grid Name="GameGrid" Margin="150,0,0,0"/>
     </Grid>
