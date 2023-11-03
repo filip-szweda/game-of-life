@@ -16,6 +16,8 @@
             <Button Content="Stop Animation" Click="StopAnimationButton_Click" />
             <Button Content="One Frame Forwards" Click="OneFrameForwardsButton_Click" />
             <Button Content="One Frame Backwards" Click="OneFrameBackwardsButton_Click" />
+            <Button Content="Export Current Generation" Click="ExportCurrentGeneration_Click" />
+            <Button Content="Import Current Generation" Click="ImportCurrentGeneration_Click" />
         </StackPanel>
         <Grid Name="GameGrid" Margin="150,0,0,0"/>
     </Grid>

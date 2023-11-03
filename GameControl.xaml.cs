@@ -182,6 +182,43 @@ namespace game_of_life
             GameOfLife.GoBackToPreviousGeneration();
         }
 
+        void ExportCurrentGeneration_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            bool[,] generationToExport = new bool[GameOfLife.Width, GameOfLife.Height];
+            for (int i = 0; i < GameOfLife.Width; i++)
+            {
+                for (int j = 0; j < GameOfLife.Height; j++)
+                {
+                    generationToExport[i, j] = GameOfLife.CurrentGeneration[i, j].IsAlive;
+                }
+            }
+            JsonSaver.SaveBoolArrayToJson(generationToExport, "currentGeneration.json");
+        }
+
+        void ImportCurrentGeneration_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            bool[,] importedGeneration = JsonSaver.LoadBoolArrayFromJson("currentGeneration.json");
+            for (int i = 0; i < GameOfLife.Width; i++)
+            {
+                for (int j = 0; j < GameOfLife.Height; j++)
+                {
+                    GameOfLife.CurrentGeneration[i, j].IsAlive = importedGeneration[i, j];
+                }
+            }
+        }
+
         void GameTick(object sender, EventArgs e)
         {
             if (GameOfLife == null)
