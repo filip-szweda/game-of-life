@@ -8,25 +8,33 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="#282A36">
     <UserControl.Resources>
-        <Style x:Key="ConstantColorButtonStyle" TargetType="Button">
+        <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#44475A"/>
             <Setter Property="Foreground" Value="#F8F8F2"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="#FF5555"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FF5555"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Left">
             <TextBox Name="GridWidthTextBox" Text="40" FontSize="14" />
             <TextBox Name="GridHeightTextBox" Text="40" FontSize="14" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="Generate Grid" Click="GenerateGridButton_Click" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="Start Animation" Click="StartAnimationButton_Click" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="Stop Animation" Click="StopAnimationButton_Click" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="One Frame Forwards" Click="OneFrameForwardsButton_Click" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="One Frame Backwards" Click="OneFrameBackwardsButton_Click" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="Export Current Generation" Click="ExportCurrentGeneration_Click" />
-            <Button Style="{StaticResource ConstantColorButtonStyle}" Content="Import Current Generation" Click="ImportCurrentGeneration_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Generate Grid" Click="GenerateGridButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Start Animation" Click="StartAnimationButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Stop Animation" Click="StopAnimationButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="One Frame Forwards" Click="OneFrameForwardsButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="One Frame Backwards" Click="OneFrameBackwardsButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Export Current Generation" Click="ExportCurrentGeneration_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Import Current Generation" Click="ImportCurrentGeneration_Click" />
             <TextBlock Text="Generations: " Foreground="#8BE9FD" FontSize="14" />
             <TextBlock Text="{Binding Generations}" Foreground="#F8F8F2" FontSize="14" />
             <TextBlock Text="Cells Born: " Foreground="#50FA7B" FontSize="14" />
