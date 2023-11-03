@@ -12,21 +12,24 @@ namespace game_of_life
     {
         public int Width;
         public int Height;
-        public Cell[,] cellsGrid;
+        public Cell[,] CurrentGeneration;
+        public List<bool[,]> PreviousGenerations;
+
         public GameOfLife(int width, int height)
         {
             Width = width;
             Height = height;
 
-            cellsGrid = new Cell[width, height];
-
+            CurrentGeneration = new Cell[width, height];
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    cellsGrid[i, j] = new Cell(i, j);
+                    CurrentGeneration[i, j] = new Cell(i, j);
                 }
             }
+
+            PreviousGenerations = new List<bool[,]>();
         }
 
         public int countNeighbourLiveCells(bool [,] previousGeneration, int x, int y)
@@ -50,16 +53,17 @@ namespace game_of_life
             return count;
         }
 
-        public void Update()
+        public void CreateNewGeneration()
         {
             bool[,] previousGeneration = new bool[Width, Height];
             for(int i = 0; i < Width; i++)
             {
                 for(int j = 0; j < Height; j++)
                 {
-                    previousGeneration[i, j] = cellsGrid[i, j].IsAlive;
+                    previousGeneration[i, j] = CurrentGeneration[i, j].IsAlive;
                 }
             }
+            PreviousGenerations.Add(previousGeneration);
 
             for (int i = 0; i < Width; i++)
             {
@@ -70,16 +74,35 @@ namespace game_of_life
                     {
                         if (neighbourLiveCell < 2 || neighbourLiveCell > 3)
                         {
-                            cellsGrid[i, j].IsAlive = false;
+                            CurrentGeneration[i, j].IsAlive = false;
                         }
                     }
                     else
                     {
                         if (neighbourLiveCell == 3)
                         {
-                            cellsGrid[i, j].IsAlive = true;
+                            CurrentGeneration[i, j].IsAlive = true;
                         }
                     }
+                }
+            }
+        }
+
+        public void GoBackToPreviousGeneration()
+        {
+            if (PreviousGenerations.Count == 0)
+            {
+                return;
+            }
+
+            bool[,] previousGeneration = PreviousGenerations[PreviousGenerations.Count - 1];
+            PreviousGenerations.RemoveAt(PreviousGenerations.Count - 1);
+
+            for(int i = 0; i < Width; i++)
+            {
+                for(int j = 0; j < Height; j++)
+                {
+                    CurrentGeneration[i, j].IsAlive = previousGeneration[i, j];
                 }
             }
         }

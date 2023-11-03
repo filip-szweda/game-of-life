@@ -25,17 +25,17 @@ namespace game_of_life
     {
         static readonly int DEFAULT_CELL_WIDTH = 20;
         static readonly int DEFAULT_CELL_HEIGHT = DEFAULT_CELL_WIDTH;
-        readonly TimeSpan tickInterval = TimeSpan.FromMilliseconds(100);
+        readonly TimeSpan TickInterval = TimeSpan.FromMilliseconds(100);
 
-        DispatcherTimer tickTimer;
-        GameOfLife? gameOfLife;
+        DispatcherTimer TickTimer;
+        GameOfLife? GameOfLife;
         public GameControl()
         {
             InitializeComponent();
             // set how often the Tick event will be raised
-            tickTimer = new DispatcherTimer { Interval = tickInterval };
+            TickTimer = new DispatcherTimer { Interval = TickInterval };
             // subscribe <method> method to the Tick event
-            tickTimer.Tick += GameTick;
+            TickTimer.Tick += GameTick;
         }
 
         void Cell_MouseDown(object sender, MouseButtonEventArgs e)
@@ -62,7 +62,7 @@ namespace game_of_life
 
         void GenerateGameGrid(int width, int height)
         {
-            if (gameOfLife == null)
+            if (GameOfLife == null)
             {
                 MessageBox.Show("[ERROR] Game grid has not been created yet.");
                 return;
@@ -95,7 +95,7 @@ namespace game_of_life
                         Fill = Brushes.White,
                         Stroke = Brushes.Black,
                         StrokeThickness = 0.5,
-                        DataContext = gameOfLife.cellsGrid[i, j]
+                        DataContext = GameOfLife.CurrentGeneration[i, j]
                     };
 
                     var binding = new Binding("IsAlive")
@@ -121,9 +121,9 @@ namespace game_of_life
             {
                 if (int.TryParse(GridHeightTextBox.Text, out int height))
                 {
-                    gameOfLife = new GameOfLife(width, height);
+                    GameOfLife = new GameOfLife(width, height);
                     GenerateGameGrid(width, height);
-                    this.DataContext = gameOfLife;
+                    this.DataContext = GameOfLife;
                 }
                 else
                 {
@@ -138,48 +138,59 @@ namespace game_of_life
 
         void StartAnimationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (gameOfLife == null)
+            if (GameOfLife == null)
             {
                 MessageBox.Show("[ERROR] Game grid has not been created yet.");
                 return;
             }
 
-            System.Diagnostics.Debug.WriteLine($"[INFO] Started tickTimer");
-            tickTimer.Start();
+            System.Diagnostics.Debug.WriteLine($"[INFO] Started TickTimer");
+            TickTimer.Start();
         }
 
         void StopAnimationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (gameOfLife == null)
+            if (GameOfLife == null)
             {
                 MessageBox.Show("[ERROR] Game grid has not been created yet.");
                 return;
             }
 
-            System.Diagnostics.Debug.WriteLine($"[INFO] Stopped tickTimer");
-            tickTimer.Stop();
+            System.Diagnostics.Debug.WriteLine($"[INFO] Stopped TickTimer");
+            TickTimer.Stop();
         }
 
-        void OneFrameForwardButton_Click(object sender, RoutedEventArgs e)
+        void OneFrameForwardsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (gameOfLife == null)
+            if (GameOfLife == null)
             {
                 MessageBox.Show("[ERROR] Game grid has not been created yet.");
                 return;
             }
 
-            gameOfLife.Update();
+            GameOfLife.CreateNewGeneration();
+        }
+
+        void OneFrameBackwardsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            GameOfLife.GoBackToPreviousGeneration();
         }
 
         void GameTick(object sender, EventArgs e)
         {
-            if (gameOfLife == null)
+            if (GameOfLife == null)
             {
                 MessageBox.Show("[ERROR] Game grid has not been created yet.");
                 return;
             }
 
-            gameOfLife.Update();
+            GameOfLife.CreateNewGeneration();
         }
     }
 }

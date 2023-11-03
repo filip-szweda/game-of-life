@@ -14,7 +14,8 @@
             <Button Content="Generate Grid" Click="GenerateGridButton_Click" />
             <Button Content="Start Animation" Click="StartAnimationButton_Click" />
             <Button Content="Stop Animation" Click="StopAnimationButton_Click" />
-            <Button Content="One Frame Forward" Click="OneFrameForwardButton_Click" />
+            <Button Content="One Frame Forwards" Click="OneFrameForwardsButton_Click" />
+            <Button Content="One Frame Backwards" Click="OneFrameBackwardsButton_Click" />
         </StackPanel>
         <Grid Name="GameGrid" Margin="150,0,0,0"/>
     </Grid>
