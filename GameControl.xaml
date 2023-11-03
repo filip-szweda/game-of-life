@@ -23,6 +23,12 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <ControlTemplate x:Key="GenerationsTemplate" TargetType="{x:Type ContentControl}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Generations: " Foreground="#8BE9FD" FontSize="14" />
+                <TextBlock Text="{Binding Generations}" Foreground="#F8F8F2" FontSize="14" />
+            </StackPanel>
+        </ControlTemplate>
     </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Left">
@@ -35,12 +41,15 @@
             <Button Style="{StaticResource ButtonStyle}" Content="One Frame Backwards" Click="OneFrameBackwardsButton_Click" />
             <Button Style="{StaticResource ButtonStyle}" Content="Export Current Generation" Click="ExportCurrentGeneration_Click" />
             <Button Style="{StaticResource ButtonStyle}" Content="Import Current Generation" Click="ImportCurrentGeneration_Click" />
-            <TextBlock Text="Generations: " Foreground="#8BE9FD" FontSize="14" />
-            <TextBlock Text="{Binding Generations}" Foreground="#F8F8F2" FontSize="14" />
-            <TextBlock Text="Cells Born: " Foreground="#50FA7B" FontSize="14" />
-            <TextBlock Text="{Binding CellsBorn}" Foreground="#F8F8F2" FontSize="14" />
-            <TextBlock Text="Cells Died: " Foreground="#FFB86C" FontSize="14" />
-            <TextBlock Text="{Binding CellsDied}" Foreground="#F8F8F2" FontSize="14" />
+            <ContentControl Template="{StaticResource GenerationsTemplate}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Cells Born: " Foreground="#50FA7B" FontSize="14" />
+                <TextBlock Text="{Binding CellsBorn}" Foreground="#F8F8F2" FontSize="14" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Cells Died: " Foreground="#FFB86C" FontSize="14" />
+                <TextBlock Text="{Binding CellsDied}" Foreground="#F8F8F2" FontSize="14" />
+            </StackPanel>
         </StackPanel>
         <Grid Name="GameGrid" Margin="166,0,0,0"/>
     </Grid>
