@@ -21,25 +21,25 @@ namespace game_of_life
             Height = height;
 
             CurrentGeneration = new Cell[width, height];
-            for (int i = 0; i < width; i++)
+            for (int x = 0; x < width; x++)
             {
-                for (int j = 0; j < height; j++)
+                for (int y = 0; y < height; y++)
                 {
-                    CurrentGeneration[i, j] = new Cell(i, j);
+                    CurrentGeneration[x, y] = new Cell(x, y);
                 }
             }
 
             PreviousGenerations = new List<bool[,]>();
         }
 
-        public int countNeighbourLiveCells(bool [,] previousGeneration, int x, int y)
+        private int countNeighbourLiveCells(bool [,] previousGeneration, int x, int y)
         {
             int count = 0;
             for (int i = x - 1; i <= x + 1; i++)
             {
                 for (int j = y - 1; j <= y + 1; j++)
                 {
-                    if ((i == x && j == y) || (i < 0 || j <0) || (i >= Width || j >= Height))
+                    if ((i == x && j == y) || (i < 0 || j < 0) || (i >= Width || j >= Height))
                     {
                         continue;
                     }
@@ -53,58 +53,66 @@ namespace game_of_life
             return count;
         }
 
-        public void CreateNewGeneration()
+        private void CreateNewGeneration()
         {
-            bool[,] previousGeneration = new bool[Width, Height];
-            for(int i = 0; i < Width; i++)
+            bool[,] previousGeneration = PreviousGenerations[PreviousGenerations.Count - 1];
+            for (int x = 0; x < Width; x++)
             {
-                for(int j = 0; j < Height; j++)
+                for (int y = 0; y < Height; y++)
                 {
-                    previousGeneration[i, j] = CurrentGeneration[i, j].IsAlive;
-                }
-            }
-            PreviousGenerations.Add(previousGeneration);
-
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    var neighbourLiveCell = countNeighbourLiveCells(previousGeneration, i, j);
-                    if (previousGeneration[i, j])
+                    var neighbourLiveCell = countNeighbourLiveCells(previousGeneration, x, y);
+                    if (previousGeneration[x, y])
                     {
                         if (neighbourLiveCell < 2 || neighbourLiveCell > 3)
                         {
-                            CurrentGeneration[i, j].IsAlive = false;
+                            CurrentGeneration[x, y].IsAlive = false;
                         }
                     }
                     else
                     {
                         if (neighbourLiveCell == 3)
                         {
-                            CurrentGeneration[i, j].IsAlive = true;
+                            CurrentGeneration[x, y].IsAlive = true;
                         }
                     }
                 }
             }
         }
 
-        public void GoBackToPreviousGeneration()
+        private void SavePreviousGeneration()
+        {
+            bool[,] previousGeneration = Utils.Cell2DArrayToBool2DArray(CurrentGeneration);
+            PreviousGenerations.Add(previousGeneration);
+        }
+
+        public void Update()
+        {
+            SavePreviousGeneration();
+            CreateNewGeneration();
+        }
+
+        private void GoBackToPreviousGeneration()
+        {
+            bool[,] previousGeneration = PreviousGenerations[PreviousGenerations.Count - 1];
+            PreviousGenerations.RemoveAt(PreviousGenerations.Count - 1);
+
+            for(int x = 0; x < Width; x++)
+            {
+                for(int y = 0; y < Height; y++)
+                {
+                    CurrentGeneration[x, y].IsAlive = previousGeneration[x, y];
+                }
+            }
+        }
+
+        public void Revert()
         {
             if (PreviousGenerations.Count == 0)
             {
                 return;
             }
 
-            bool[,] previousGeneration = PreviousGenerations[PreviousGenerations.Count - 1];
-            PreviousGenerations.RemoveAt(PreviousGenerations.Count - 1);
-
-            for(int i = 0; i < Width; i++)
-            {
-                for(int j = 0; j < Height; j++)
-                {
-                    CurrentGeneration[i, j].IsAlive = previousGeneration[i, j];
-                }
-            }
+            GoBackToPreviousGeneration();
         }
     }
 }

@@ -17,12 +17,12 @@ namespace game_of_life
             int cols = twoDimensionalArray.GetLength(1);
             bool[][] jaggedArray = new bool[rows][];
 
-            for (int i = 0; i < rows; i++)
+            for (int x = 0; x < rows; x++)
             {
-                jaggedArray[i] = new bool[cols];
-                for (int j = 0; j < cols; j++)
+                jaggedArray[x] = new bool[cols];
+                for (int y = 0; y < cols; y++)
                 {
-                    jaggedArray[i][j] = twoDimensionalArray[i, j];
+                    jaggedArray[x][y] = twoDimensionalArray[x, y];
                 }
             }
             return jaggedArray;
@@ -43,11 +43,11 @@ namespace game_of_life
             int cols = jaggedArray[0].Length;
             bool[,] twoDimensionalArray = new bool[rows, cols];
 
-            for (int i = 0; i < rows; i++)
+            for (int x = 0; x < rows; x++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int y = 0; y < cols; y++)
                 {
-                    twoDimensionalArray[i, j] = jaggedArray[i][j];
+                    twoDimensionalArray[x, y] = jaggedArray[x][y];
                 }
             }
             return twoDimensionalArray;

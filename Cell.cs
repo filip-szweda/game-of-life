@@ -56,4 +56,20 @@ namespace game_of_life
             return (Brush)value == Brushes.Black;
         }
     }
+
+    public class Utils
+    {
+        public static bool[,] Cell2DArrayToBool2DArray(Cell[,] cell2DArray)
+        {
+            bool[,] bool2DArray = new bool[cell2DArray.GetLength(0), cell2DArray.GetLength(1)];
+            for(int x = 0; x < cell2DArray.GetLength(0); x++)
+            {
+                for(int y = 0; y < cell2DArray.GetLength(1); y++)
+                {
+                    bool2DArray[x, y] = cell2DArray[x, y].IsAlive;
+                }
+            }
+            return bool2DArray;
+        }
+    }
 }

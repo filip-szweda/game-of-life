@@ -74,19 +74,19 @@ namespace game_of_life
             GameGrid.Width = width * DEFAULT_CELL_WIDTH;
             GameGrid.Height = height * DEFAULT_CELL_HEIGHT;
 
-            for (int i = 0; i < width; i++)
+            for (int x = 0; x < width; x++)
             {
                 GameGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(DEFAULT_CELL_WIDTH) });
             }
 
-            for (int i = 0; i < height; i++)
+            for (int y = 0; y < height; y++)
             {
                 GameGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(DEFAULT_CELL_HEIGHT) });
             }
 
-            for (int i = 0; i < width; i++)
+            for (int x = 0; x < width; x++)
             {
-                for (int j = 0; j < height; j++)
+                for (int y = 0; y < height; y++)
                 {
                     var cell = new Rectangle
                     {
@@ -95,7 +95,7 @@ namespace game_of_life
                         Fill = Brushes.White,
                         Stroke = Brushes.Black,
                         StrokeThickness = 0.5,
-                        DataContext = GameOfLife.CurrentGeneration[i, j]
+                        DataContext = GameOfLife.CurrentGeneration[x, y]
                     };
 
                     var binding = new Binding("IsAlive")
@@ -108,8 +108,8 @@ namespace game_of_life
 
                     cell.MouseDown += Cell_MouseDown;
 
-                    Grid.SetColumn(cell, i);
-                    Grid.SetRow(cell, j);
+                    Grid.SetColumn(cell, x);
+                    Grid.SetRow(cell, y);
                     GameGrid.Children.Add(cell);
                 }
             }
@@ -168,7 +168,7 @@ namespace game_of_life
                 return;
             }
 
-            GameOfLife.CreateNewGeneration();
+            GameOfLife.Update();
         }
 
         void OneFrameBackwardsButton_Click(object sender, RoutedEventArgs e)
@@ -179,7 +179,7 @@ namespace game_of_life
                 return;
             }
 
-            GameOfLife.GoBackToPreviousGeneration();
+            GameOfLife.Revert();
         }
 
         void ExportCurrentGeneration_Click(object sender, RoutedEventArgs e)
@@ -191,11 +191,11 @@ namespace game_of_life
             }
 
             bool[,] generationToExport = new bool[GameOfLife.Width, GameOfLife.Height];
-            for (int i = 0; i < GameOfLife.Width; i++)
+            for (int x = 0; x < GameOfLife.Width; x++)
             {
-                for (int j = 0; j < GameOfLife.Height; j++)
+                for (int y = 0; y < GameOfLife.Height; y++)
                 {
-                    generationToExport[i, j] = GameOfLife.CurrentGeneration[i, j].IsAlive;
+                    generationToExport[x, y] = GameOfLife.CurrentGeneration[x, y].IsAlive;
                 }
             }
             JsonSaver.SaveBoolArrayToJson(generationToExport, "currentGeneration.json");
@@ -210,11 +210,11 @@ namespace game_of_life
             }
 
             bool[,] importedGeneration = JsonSaver.LoadBoolArrayFromJson("currentGeneration.json");
-            for (int i = 0; i < GameOfLife.Width; i++)
+            for (int x = 0; x < GameOfLife.Width; x++)
             {
-                for (int j = 0; j < GameOfLife.Height; j++)
+                for (int y = 0; y < GameOfLife.Height; y++)
                 {
-                    GameOfLife.CurrentGeneration[i, j].IsAlive = importedGeneration[i, j];
+                    GameOfLife.CurrentGeneration[x, y].IsAlive = importedGeneration[x, y];
                 }
             }
         }
@@ -227,7 +227,7 @@ namespace game_of_life
                 return;
             }
 
-            GameOfLife.CreateNewGeneration();
+            GameOfLife.Update();
         }
     }
 }
