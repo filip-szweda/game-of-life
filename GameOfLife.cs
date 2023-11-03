@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,49 @@ namespace game_of_life
         public int Height;
         public Cell[,] CurrentGeneration;
         public List<bool[,]> PreviousGenerations;
+        public int cellsDied = 0;
+        public int cellsBorn = 0;
+        public int generations = 0;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public int Generations
+        {
+            get => generations;
+            set
+            {
+                if (generations != value)
+                {
+                    generations = value;
+                    OnPropertyChanged(nameof(Generations));
+                }
+            }
+        }
+
+        public int CellsDied
+        {
+            get => cellsDied;
+            set
+            {
+                if (cellsDied != value)
+                {
+                    cellsDied = value;
+                    OnPropertyChanged(nameof(CellsDied));
+                }
+            }
+        }
+
+        public int CellsBorn
+        {
+            get => cellsBorn;
+            set
+            {
+                if (cellsBorn != value)
+                {
+                    cellsBorn = value;
+                    OnPropertyChanged(nameof(CellsBorn));
+                }
+            }
+        }
 
         public GameOfLife(int width, int height)
         {
@@ -55,6 +99,7 @@ namespace game_of_life
 
         private void CreateNewGeneration()
         {
+            Generations++;
             bool[,] previousGeneration = PreviousGenerations[PreviousGenerations.Count - 1];
             for (int x = 0; x < Width; x++)
             {
@@ -65,6 +110,8 @@ namespace game_of_life
                     {
                         if (neighbourLiveCell < 2 || neighbourLiveCell > 3)
                         {
+                            System.Diagnostics.Debug.WriteLine("[INFO] A cell has died");
+                            CellsDied++;
                             CurrentGeneration[x, y].IsAlive = false;
                         }
                     }
@@ -72,6 +119,8 @@ namespace game_of_life
                     {
                         if (neighbourLiveCell == 3)
                         {
+                            System.Diagnostics.Debug.WriteLine("[INFO] A cell has been born");
+                            CellsBorn++;
                             CurrentGeneration[x, y].IsAlive = true;
                         }
                     }
@@ -113,6 +162,11 @@ namespace game_of_life
             }
 
             GoBackToPreviousGeneration();
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
