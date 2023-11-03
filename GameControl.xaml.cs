@@ -136,6 +136,30 @@ namespace game_of_life
             }
         }
 
+        void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (gameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[INFO] Started tickTimer");
+            tickTimer.Start();
+        }
+
+        void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (gameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[INFO] Stopped tickTimer");
+            tickTimer.Stop();
+        }
+
         void GameTick(object sender, EventArgs e)
         {
             if (gameOfLife == null)
@@ -144,7 +168,8 @@ namespace game_of_life
                 return;
             }
 
-            gameOfLife.Update(); ;
+            System.Diagnostics.Debug.WriteLine($"[INFO] Started game of life update");
+            gameOfLife.Update();
         }
     }
 }

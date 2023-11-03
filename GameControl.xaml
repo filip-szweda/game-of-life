@@ -12,6 +12,8 @@
             <TextBox Name="GridWidthTextBox" Width="150" Text="40" />
             <TextBox Name="GridHeightTextBox" Width="150" Text="40" />
             <Button Content="Generate Grid" Click="GenerateGridButton_Click" />
+            <Button Content="Start" Click="StartButton_Click" />
+            <Button Content="Stop" Click="StopButton_Click" />
         </StackPanel>
         <Grid Name="GameGrid" Margin="150,0,0,0"/>
     </Grid>

@@ -34,17 +34,9 @@ namespace game_of_life
             int count = 0;
             for (int i = x - 1; i <= x + 1; i++)
             {
-                if (i < 0 || i >= Width)
-                {
-                    continue;
-                }
                 for (int j = y - 1; j <= y + 1; j++)
                 {
-                    if (j < 0 || j >= Height)
-                    {
-                        continue;
-                    }
-                    if (i == x && j == y)
+                    if ((i == x && j == y) || (i < 0 || j <0) || (i >= Width || j >= Height))
                     {
                         continue;
                     }
@@ -59,12 +51,12 @@ namespace game_of_life
 
         public void Update()
         {
-            Cell[,] newGeneration = new Cell[Width, Height];
-            for (int i = 0; i < Width; i++)
+            bool[,] newGeneration = new bool[Width, Height];
+            for(int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < Height; j++)
+                for(int j = 0; j < Height; j++)
                 {
-                    cellsGrid[i, j] = new Cell(i, j);
+                    newGeneration[i, j] = cellsGrid[i, j].IsAlive;
                 }
             }
 
@@ -77,28 +69,26 @@ namespace game_of_life
                     {
                         if (neighbourLiveCell < 2 || neighbourLiveCell > 3)
                         {
-                            newGeneration[i, j].IsAlive = false;
-                        }
-                        else
-                        {
-                            newGeneration[i, j].IsAlive = true;
+                            newGeneration[i, j] = false;
                         }
                     }
                     else
                     {
                         if (neighbourLiveCell == 3)
                         {
-                            newGeneration[i, j].IsAlive = true;
-                        }
-                        else
-                        {
-                            newGeneration[i, j].IsAlive = false;
+                            newGeneration[i, j] = true;
                         }
                     }
                 }
             }
 
-            cellsGrid = newGeneration;
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    cellsGrid[i, j].IsAlive = newGeneration[i, j];
+                }
+            }
         }
     }
 }
