@@ -261,6 +261,13 @@ namespace game_of_life
             mainWindow.SwitchToShapeLibraryControl();
         }
 
+        private void SaveGridAsImage_Click(object sender, RoutedEventArgs e)
+        {
+            var fileName = "grid.png";
+            ImageHandler.SaveGridAsImage(GameGrid, fileName);
+            MessageBox.Show($"[INFO] Game grid has been saved as image {fileName}.");
+        }
+
         void GameTick(object sender, EventArgs e)
         {
             if (GameOfLife == null)
