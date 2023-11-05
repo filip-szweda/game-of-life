@@ -33,7 +33,7 @@ namespace game_of_life
 
         private void CreateGliderButton_Click(object sender, RoutedEventArgs e)
         {
-            var glider = StateHandler.LoadStateFromJson("glider.json");
+            var glider = StateHandler.LoadStateFromJson("shapes/glider.json");
             SwitchToGameControlWithShape(glider);
         }
 

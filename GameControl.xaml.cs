@@ -218,7 +218,15 @@ namespace game_of_life
             {
                 for (int y = 0; y < GameOfLife.Height; y++)
                 {
-                    GameOfLife.CurrentGeneration[x, y].IsAlive = importedGeneration[x, y];
+                    // if we are importing a smaller grid, we need to set the rest of the cells to false
+                    if (x < importedGeneration.GetLength(0) && y < importedGeneration.GetLength(1))
+                    {
+                        GameOfLife.CurrentGeneration[x, y].IsAlive = importedGeneration[x, y];
+                    }
+                    else
+                    {
+                        GameOfLife.CurrentGeneration[x, y].IsAlive = false;
+                    }
                 }
             }
 
