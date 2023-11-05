@@ -30,9 +30,10 @@ namespace game_of_life
             SwitchToGameControl();
         }
 
-        public void SwitchToGameControl()
+        public void SwitchToGameControl(State? shape = null)
         {
             MainContentControl.Content = _gameControl;
+            _gameControl.ImportState(shape);
         }
 
         public void SwitchToShapeLibraryControl()

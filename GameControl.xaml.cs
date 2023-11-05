@@ -206,16 +206,8 @@ namespace game_of_life
                 GameOfLife.Generations);
         }
 
-        void ImportState_Click(object sender, RoutedEventArgs e)
+        public void ImportState(State? state)
         {
-            if (GameOfLife == null)
-            {
-                MessageBox.Show("[ERROR] Game grid has not been created yet.");
-                return;
-            }
-
-            var state = StateHandler.LoadStateFromJson("state.json");
-
             if (state == null)
             {
                 return;
@@ -233,6 +225,18 @@ namespace game_of_life
             GameOfLife.CellsDied = state.CellsDied;
             GameOfLife.CellsBorn = state.CellsBorn;
             GameOfLife.Generations = state.Generations;
+        }
+
+        void ImportState_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            var state = StateHandler.LoadStateFromJson("state.json");
+            ImportState(state);
         }
 
         private void ChooseShape_Click(object sender, RoutedEventArgs e)
