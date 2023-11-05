@@ -34,7 +34,7 @@ namespace game_of_life
             InitializeComponent();
             // set how often the Tick event will be raised
             TickTimer = new DispatcherTimer { Interval = TickInterval };
-            // subscribe <method> method to the Tick event
+            // subscribe GameTick method to the Tick event
             TickTimer.Tick += GameTick;
         }
 
@@ -233,6 +233,18 @@ namespace game_of_life
             GameOfLife.CellsDied = state.CellsDied;
             GameOfLife.CellsBorn = state.CellsBorn;
             GameOfLife.Generations = state.Generations;
+        }
+
+        private void ChooseShape_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameOfLife == null)
+            {
+                MessageBox.Show("[ERROR] Game grid has not been created yet.");
+                return;
+            }
+
+            var mainWindow = (MainWindow)Window.GetWindow(this);
+            mainWindow.SwitchToShapeLibraryControl();
         }
 
         void GameTick(object sender, EventArgs e)

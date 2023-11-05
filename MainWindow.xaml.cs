@@ -20,12 +20,24 @@ namespace game_of_life
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameControl gameControl;
+        private GameControl _gameControl;
+        private ShapeLibraryControl _shapeLibraryControl;
         public MainWindow()
         {
             InitializeComponent();
-            gameControl = new GameControl();
-            MainContentControl.Content = gameControl;
+            _gameControl = new GameControl();
+            _shapeLibraryControl = new ShapeLibraryControl();
+            SwitchToGameControl();
+        }
+
+        public void SwitchToGameControl()
+        {
+            MainContentControl.Content = _gameControl;
+        }
+
+        public void SwitchToShapeLibraryControl()
+        {
+            MainContentControl.Content = _shapeLibraryControl;
         }
     }
 }

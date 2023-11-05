@@ -50,6 +50,7 @@
             <Button Style="{StaticResource ButtonStyle}" Content="One Frame Backwards" Click="OneFrameBackwardsButton_Click" />
             <Button Style="{StaticResource ButtonStyle}" Content="Export State" Click="ExportState_Click" />
             <Button Style="{StaticResource ButtonStyle}" Content="Import State" Click="ImportState_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Choose Shape" Click="ChooseShape_Click" />
             <ContentControl Template="{StaticResource GenerationsTemplate}" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Cells Born: " Foreground="#50FA7B" FontSize="14" />
