@@ -251,6 +251,9 @@ namespace game_of_life
             GameOfLife.CellsDied = state.CellsDied;
             GameOfLife.CellsBorn = state.CellsBorn;
             GameOfLife.Generations = state.Generations;
+
+            // importing a state means that we are starting a new game
+            GameOfLife.PreviousGenerations = new List<bool[,]>();
         }
 
         void ImportState_Click(object sender, RoutedEventArgs e)
