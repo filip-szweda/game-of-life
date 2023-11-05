@@ -22,6 +22,9 @@
     <None Update="shapes\glider.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="shapes\heavyweightSpaceship.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="shapes\loaf.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

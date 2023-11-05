@@ -61,10 +61,10 @@ namespace game_of_life
             SwitchToGameControlWithShape(beacon);
         }
 
-        private void CreateLoafButton_Click(object sender, RoutedEventArgs e)
+        private void CreateHeavyweightSpaceshipButton_Click(object sender, RoutedEventArgs e)
         {
-            var loaf = StateHandler.LoadStateFromJson("shapes/loaf.json");
-            SwitchToGameControlWithShape(loaf);
+            var heavyweightSpaceship = StateHandler.LoadStateFromJson("shapes/heavyweightSpaceship.json");
+            SwitchToGameControlWithShape(heavyweightSpaceship);
         }
     }
 }
