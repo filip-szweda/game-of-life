@@ -199,11 +199,13 @@ namespace game_of_life
                 }
             }
 
-            StateHandler.SaveStateToJson("state.json",
+            var fileName = "state.json";
+            StateHandler.SaveStateToJson(fileName,
                 generationToExport,
                 GameOfLife.CellsDied,
                 GameOfLife.CellsBorn,
                 GameOfLife.Generations);
+            MessageBox.Show($"[INFO] Exported state to {fileName}");
         }
 
         public void ImportState(State? state)
