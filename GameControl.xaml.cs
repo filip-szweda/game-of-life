@@ -117,23 +117,39 @@ namespace game_of_life
 
         void GenerateGridButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(GridWidthTextBox.Text, out int width))
-            {
-                if (int.TryParse(GridHeightTextBox.Text, out int height))
-                {
-                    GameOfLife = new GameOfLife(width, height);
-                    GenerateGameGrid(width, height);
-                    this.DataContext = GameOfLife;
-                }
-                else
-                {
-                    MessageBox.Show($"[ERROR] Provided grid height: {height} is invalid. Please, provide valid grid size.");
-                }
-            }
-            else
+            if (!int.TryParse(GridWidthTextBox.Text, out int width))
             {
                 MessageBox.Show($"[ERROR] Provided grid width: {width} is invalid. Please, provide valid grid size.");
+                return;
             }
+
+            if (!int.TryParse(GridHeightTextBox.Text, out int height))
+            {
+                MessageBox.Show($"[ERROR] Provided grid height: {height} is invalid. Please, provide valid grid size.");
+                return;
+            }
+
+            if (!int.TryParse(CellsRequiredToBirthTextBox.Text, out int cellsRequiredToBirth))
+            {
+                MessageBox.Show($"[ERROR] Provided cells required to birth number: {cellsRequiredToBirth} is invalid. Please, provide valid number.");
+                return;
+            }
+
+            if (!int.TryParse(CellsRequiredToDeathBySolitudeTextBox.Text, out int cellsRequiredToDeathBySolitude))
+            {
+                MessageBox.Show($"[ERROR] Provided cells required to death by solitude number: {cellsRequiredToDeathBySolitude} is invalid. Please, provide valid number.");
+                return;
+            }
+
+            if (!int.TryParse(CellsRequiredToDeathByOverpopulationTextBox.Text, out int cellsRequiredToDeathByOverpopulation))
+            {
+                MessageBox.Show($"[ERROR] Provided cells required to death by overpopulation number: {cellsRequiredToDeathByOverpopulation} is invalid. Please, provide valid number.");
+                return;
+            }
+
+            GameOfLife = new GameOfLife(width, height, cellsRequiredToBirth, cellsRequiredToDeathBySolitude, cellsRequiredToDeathByOverpopulation);
+            GenerateGameGrid(width, height);
+            this.DataContext = GameOfLife;
         }
 
         void StartAnimationButton_Click(object sender, RoutedEventArgs e)

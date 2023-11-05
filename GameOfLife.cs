@@ -13,6 +13,9 @@ namespace game_of_life
     {
         public int Width;
         public int Height;
+        public int CellsRequiredToBirth;
+        public int CellsRequiredToDeathBySolitude;
+        public int CellsRequiredToDeathByOverpopulation;
         public Cell[,] CurrentGeneration;
         public List<bool[,]> PreviousGenerations;
         public int cellsDied = 0;
@@ -59,10 +62,13 @@ namespace game_of_life
             }
         }
 
-        public GameOfLife(int width, int height)
+        public GameOfLife(int width, int height, int cellsRequiredToBirth, int cellsRequiredToDeathBySolitude, int cellsRequiredToDeathByOverpopulation)
         {
             Width = width;
             Height = height;
+            CellsRequiredToBirth = cellsRequiredToBirth;
+            CellsRequiredToDeathBySolitude = cellsRequiredToDeathBySolitude;
+            CellsRequiredToDeathByOverpopulation = cellsRequiredToDeathByOverpopulation;
 
             CurrentGeneration = new Cell[width, height];
             for (int x = 0; x < width; x++)
@@ -108,7 +114,7 @@ namespace game_of_life
                     var neighbourLiveCell = countNeighbourLiveCells(previousGeneration, x, y);
                     if (previousGeneration[x, y])
                     {
-                        if (neighbourLiveCell < 2 || neighbourLiveCell > 3)
+                        if (neighbourLiveCell <= CellsRequiredToDeathBySolitude || neighbourLiveCell >= CellsRequiredToDeathByOverpopulation)
                         {
                             System.Diagnostics.Debug.WriteLine("[INFO] A cell has died");
                             CellsDied++;
@@ -117,7 +123,7 @@ namespace game_of_life
                     }
                     else
                     {
-                        if (neighbourLiveCell == 3)
+                        if (neighbourLiveCell == CellsRequiredToBirth)
                         {
                             System.Diagnostics.Debug.WriteLine("[INFO] A cell has been born");
                             CellsBorn++;
