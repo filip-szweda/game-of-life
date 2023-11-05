@@ -182,7 +182,7 @@ namespace game_of_life
             GameOfLife.Revert();
         }
 
-        void ExportCurrentGeneration_Click(object sender, RoutedEventArgs e)
+        void ExportState_Click(object sender, RoutedEventArgs e)
         {
             if (GameOfLife == null)
             {
@@ -198,10 +198,15 @@ namespace game_of_life
                     generationToExport[x, y] = GameOfLife.CurrentGeneration[x, y].IsAlive;
                 }
             }
-            JsonSaver.SaveBoolArrayToJson(generationToExport, "currentGeneration.json");
+
+            StateHandler.SaveStateToJson("state.json",
+                generationToExport,
+                GameOfLife.CellsDied,
+                GameOfLife.CellsBorn,
+                GameOfLife.Generations);
         }
 
-        void ImportCurrentGeneration_Click(object sender, RoutedEventArgs e)
+        void ImportState_Click(object sender, RoutedEventArgs e)
         {
             if (GameOfLife == null)
             {
@@ -209,7 +214,14 @@ namespace game_of_life
                 return;
             }
 
-            bool[,] importedGeneration = JsonSaver.LoadBoolArrayFromJson("currentGeneration.json");
+            var state = StateHandler.LoadStateFromJson("state.json");
+
+            if (state == null)
+            {
+                return;
+            }
+
+            bool[,] importedGeneration = state.Generation;
             for (int x = 0; x < GameOfLife.Width; x++)
             {
                 for (int y = 0; y < GameOfLife.Height; y++)
@@ -217,6 +229,10 @@ namespace game_of_life
                     GameOfLife.CurrentGeneration[x, y].IsAlive = importedGeneration[x, y];
                 }
             }
+
+            GameOfLife.CellsDied = state.CellsDied;
+            GameOfLife.CellsBorn = state.CellsBorn;
+            GameOfLife.Generations = state.Generations;
         }
 
         void GameTick(object sender, EventArgs e)
