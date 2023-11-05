@@ -1,0 +1,23 @@
+{
+  "Generation": [
+    [
+      false,
+      true
+    ],
+    [
+      true,
+      true
+    ],
+    [
+      true,
+      true
+    ],
+    [
+      true,
+      false
+    ]
+  ],
+  "CellsDied": 0,
+  "CellsBorn": 0,
+  "Generations": 0
+}

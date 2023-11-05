@@ -42,8 +42,8 @@
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,160,0">
             <Button Style="{StaticResource ButtonStyle}" Content="Penta-decathlon" Height="75" Width="160" Click="CreatePentadecathlonButton_Click" />
-            <Button Style="{StaticResource ButtonStyle}" Content="Heavy-weight spaceship" VerticalAlignment="Top" Height="75" Width="160" Click="CreateHeavyweightSpaceshipButton_Click" />
-            <Button Style="{StaticResource ButtonStyle}" Content="Cloverleaf" Height="75" Width="160" Click="CreateCloverleafButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Beacon" VerticalAlignment="Top" Height="75" Width="160" Click="CreateBeaconButton_Click" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Loaf" Height="75" Width="160" Click="CreateLoafButton_Click" />
         </StackPanel>
 
     </Grid>

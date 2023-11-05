@@ -39,32 +39,32 @@ namespace game_of_life
 
         private void CreateToadButton_Click(object sender, RoutedEventArgs e)
         {
-            var toad = StateHandler.LoadStateFromJson("toad.json");
+            var toad = StateHandler.LoadStateFromJson("shapes/toad.json");
             SwitchToGameControlWithShape(toad);
         }
 
         private void CreatePulsarButton_Click(object sender, RoutedEventArgs e)
         {
-            var pulsar = StateHandler.LoadStateFromJson("pulsar.json");
+            var pulsar = StateHandler.LoadStateFromJson("shapes/pulsar.json");
             SwitchToGameControlWithShape(pulsar);
         }
 
         private void CreatePentadecathlonButton_Click(object sender, RoutedEventArgs e)
         {
-            var pentadecathlon = StateHandler.LoadStateFromJson("pentadecathlon.json");
+            var pentadecathlon = StateHandler.LoadStateFromJson("shapes/pentadecathlon.json");
             SwitchToGameControlWithShape(pentadecathlon);
         }
 
-        private void CreateHeavyweightSpaceshipButton_Click(object sender, RoutedEventArgs e)
+        private void CreateBeaconButton_Click(object sender, RoutedEventArgs e)
         {
-            var heavyweightSpaceship = StateHandler.LoadStateFromJson("heavyweightSpaceship.json");
-            SwitchToGameControlWithShape(heavyweightSpaceship);
+            var beacon = StateHandler.LoadStateFromJson("shapes/beacon.json");
+            SwitchToGameControlWithShape(beacon);
         }
 
-        private void CreateCloverleafButton_Click(object sender, RoutedEventArgs e)
+        private void CreateLoafButton_Click(object sender, RoutedEventArgs e)
         {
-            var cloverleaf = StateHandler.LoadStateFromJson("cloverleaf.json");
-            SwitchToGameControlWithShape(cloverleaf);
+            var loaf = StateHandler.LoadStateFromJson("shapes/loaf.json");
+            SwitchToGameControlWithShape(loaf);
         }
     }
 }
