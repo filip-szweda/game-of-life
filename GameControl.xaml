@@ -41,7 +41,9 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Left">
+            <TextBlock Text="Width:" Foreground="#F8F8F2" FontSize="14" />
             <TextBox Name="GridWidthTextBox" Text="40" FontSize="14" />
+            <TextBlock Text="Height:" Foreground="#F8F8F2" FontSize="14" />
             <TextBox Name="GridHeightTextBox" Text="40" FontSize="14" />
             <Button Style="{StaticResource ButtonStyle}" Content="Generate Grid" Click="GenerateGridButton_Click" />
             <Button Style="{StaticResource ButtonStyle}" Content="Start Animation" Click="StartAnimationButton_Click" />
