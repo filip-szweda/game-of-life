@@ -145,13 +145,25 @@ namespace game_of_life
             bool[,] previousGeneration = PreviousGenerations[PreviousGenerations.Count - 1];
             PreviousGenerations.RemoveAt(PreviousGenerations.Count - 1);
 
-            for(int x = 0; x < Width; x++)
+            for (int x = 0; x < Width; x++)
             {
-                for(int y = 0; y < Height; y++)
+                for (int y = 0; y < Height; y++)
                 {
+                    if (CurrentGeneration[x, y].IsAlive && !previousGeneration[x, y])
+                    {
+                        CellsBorn--;
+                    }
+
+                    if (!CurrentGeneration[x, y].IsAlive && previousGeneration[x, y])
+                    {
+                        CellsDied--;
+                    }
+
                     CurrentGeneration[x, y].IsAlive = previousGeneration[x, y];
                 }
             }
+
+            Generations--;
         }
 
         public void Revert()
