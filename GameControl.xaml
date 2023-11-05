@@ -70,6 +70,8 @@
                 <TextBlock Text="{Binding CellsDied}" Foreground="#F8F8F2" FontSize="14" />
             </StackPanel>
         </StackPanel>
-        <Grid Name="GameGrid" Margin="166,0,0,0"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Name="GameGrid"/>
+        </StackPanel>
     </Grid>
 </UserControl>

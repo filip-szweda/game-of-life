@@ -15,7 +15,7 @@ namespace game_of_life
         public static void SaveGridAsImage(Grid grid, string fileName)
         {
             RenderTargetBitmap renderTargetBitmap =
-                new RenderTargetBitmap((int)grid.ActualWidth, (int)grid.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                new RenderTargetBitmap((int) grid.ActualWidth, (int) grid.ActualHeight, 96, 96, PixelFormats.Pbgra32);
 
             renderTargetBitmap.Render(grid);
 
@@ -23,7 +23,6 @@ namespace game_of_life
             {
                 BitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-
                 encoder.Save(outputStream);
             }
         }
